@@ -1,0 +1,27 @@
+{
+    "version": "1.0.0",
+    "configurations": [
+        {
+            "name": "NestJS App",
+            "type": "node",
+            "request": "launch",
+            "runtimeArgs": ["run", "start:debug"],
+            "runtimeExecutable": "npm",
+            "skipFiles": ["<node_internals>/**"],
+            "restart": true,
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "name": "NestJS Tests",
+            "type": "node",
+            "request": "launch",
+            "runtimeArgs": ["run", "test:debug"],
+            "runtimeExecutable": "npm",
+            "skipFiles": ["<node_internals>/**"],
+            "restart": false,
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        }
+    ]
+}
