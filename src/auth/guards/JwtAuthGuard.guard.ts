@@ -16,8 +16,8 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       context.getClass(),
     ]);
     if (isPublic) {
-      return true; // Permite el acceso a la ruta si está marcada como pública
+      return true;
     }
-    return super.canActivate(context); // De lo contrario, aplica la protección JWT
+    return super.canActivate(context);
   }
 }

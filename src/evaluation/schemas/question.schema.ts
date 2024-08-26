@@ -12,8 +12,8 @@ export class Question {
   @Prop({ required: true })
   text: string;
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'Answer' }] })
-  answers: (Types.ObjectId | AnswerDocument)[];
+ @Prop({ type: [{ type: Types.ObjectId, ref: 'Answer' }] })
+  answers: Types.ObjectId[];
 
   @Prop({ type: Types.ObjectId, ref: 'Evaluation' })
   evaluationId: Types.ObjectId;

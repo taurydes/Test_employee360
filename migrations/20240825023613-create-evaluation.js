@@ -6,45 +6,49 @@ module.exports = {
           bsonType: 'object',
           required: ['period', 'status', 'type'],
           properties: {
+            _id: {
+              bsonType: 'objectId',
+              description: 'Debe ser un ObjectId y es requerido'
+            },
             period: {
               bsonType: 'string',
-              description: 'must be a string and is required'
+              description: 'Debe ser una cadena de texto y es requerido'
             },
             status: {
               enum: ['pending', 'in_progress', 'completed'],
-              description: 'can only be one of the enum values and is required'
+              description: 'Solo puede ser uno de los valores predefinidos y es requerido'
             },
             type: {
               enum: ['self', 'peer', 'manager'],
-              description: 'can only be one of the enum values and is required'
+              description: 'Solo puede ser uno de los valores predefinidos y es requerido'
             },
             questions: {
               bsonType: ['array'],
               items: {
                 bsonType: 'objectId',
-                description: 'must be an objectId and refer to a Question'
+                description: 'Debe ser un ObjectId y referirse a una Pregunta'
               },
-              description: 'Array of question IDs'
+              description: 'Array de IDs de preguntas'
             },
             employeeId: {
               bsonType: 'objectId',
-              description: 'must be an objectId and refer to an Employee'
+              description: 'Debe ser un ObjectId y referirse a un Empleado'
             },
             reviewerIds: {
               bsonType: ['array'],
               items: {
                 bsonType: 'objectId',
-                description: 'must be an objectId and refer to a User who is reviewing'
+                description: 'Debe ser un ObjectId y referirse a un Usuario que está revisando'
               },
-              description: 'Array of reviewer IDs'
+              description: 'Array de IDs de revisores'
             },
             submittedAt: {
               bsonType: 'date',
-              description: 'must be a date and is optional'
+              description: 'Debe ser una fecha y es opcional'
             },
             score: {
               bsonType: 'double',
-              description: 'Evaluation score, calculated based on answers'
+              description: 'Puntuación de la evaluación, calculada en base a las respuestas'
             }
           }
         }

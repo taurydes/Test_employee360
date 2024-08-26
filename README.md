@@ -32,7 +32,51 @@
 $ npm install
 ```
 
-## Running the app
+## Bases de datos
+
+Las bases de datos se pueden inicializar usando docker.
+
+1. Clona el repositorio:
+
+```bash
+
+git clone https://github.com/tu_usuario/proyecto-evaluacion.git
+cd proyecto-evaluacion
+```
+
+2. Copia el contenido de `.env.example` y crea un `.env`:
+
+```bash
+cp .env.example .env
+```
+
+3. Abre el archivo .env y ajusta las variables para las bases de datos. Por ejemplo
+
+```bash
+LOG_HTTP_REQUEST=true
+MONGO_URI=mongodb://mongo:27017/proyecto_evaluacion
+
+MAIL_HOST=smtp.gmail.com
+MAIL_USER=nombreusuario
+MAIL_PASSWORD="tu clave de aplicacion"
+MAIL_FROM=tucorreo@gmail.com
+MAIL_PORT=587
+
+```
+
+4. Ejecuta el siguiente comando para levantar las bases de datos con Docker Compose:
+
+```bash
+docker-compose up
+
+```
+
+5. Ejecuta el siguiente comando para correr las migraciones:
+
+```bash
+ npx migrate-mongo up
+
+```
 
 ```bash
 # development
@@ -41,8 +85,6 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
 ```
 
 ## Test
@@ -51,23 +93,17 @@ $ npm run start:prod
 # unit tests
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
-## Support
+## Seguridad
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Este proyecto implementa varias medidas de seguridad:
 
-## Stay in touch
+Rate Limiting: Limita el número de solicitudes por IP para prevenir abusos.
+Hashing de Contraseñas: Las contraseñas se almacenan de forma segura utilizando bcrypt.
+Sanitización de Datos: Los datos se sanitizan para prevenir inyecciones NoSQL y otros ataques de seguridad.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Documentación de la API
 
-## License
+La documentación de la API está generada con Swagger. Puedes acceder a ella en http://localhost:3000/api.
 
-Nest is [MIT licensed](LICENSE).

@@ -6,6 +6,7 @@ import {
   IsEnum,
   IsArray,
   IsOptional,
+  IsMongoId,
 } from 'class-validator';
 import { Types } from 'mongoose';
 import { CreateQuestionDto } from './create-question.dto';
@@ -42,5 +43,6 @@ export class CreateEvaluationDto {
 
   @ApiProperty({ description: 'Employee ID', type: String })
   @IsNotEmpty()
+  @IsMongoId()
   employeeId: Types.ObjectId;
 }

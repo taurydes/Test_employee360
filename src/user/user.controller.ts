@@ -1,26 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Auth } from 'src/auth/decorators/auth.decorator';
+import { userRoles } from 'src/common/constants';
 
 @ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-  
-  /**
-   * @summary Crear un nuevo usuario
-   * @param createUserDto - Datos del usuario a crear
-   * @returns El usuario creado
-   */
-  @ApiOperation({ summary: 'Crear un nuevo usuario' })
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
-  }
 
   /**
    * @summary Listar todos los usuarios
@@ -38,8 +36,9 @@ export class UserController {
    * @returns El usuario encontrado
    * @throws NotFoundException si el usuario no existe
    */
+
+  @Auth(userRoles.Manager,userRoles.Admin)
   @ApiOperation({ summary: 'Obtener un usuario por ID' })
-  @Auth()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
@@ -53,7 +52,7 @@ export class UserController {
    * @throws NotFoundException si el usuario no existe
    */
   @ApiOperation({ summary: 'Actualizar un usuario por ID' })
-  @Auth()
+  
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(id, updateUserDto);
@@ -66,7 +65,7 @@ export class UserController {
    * @throws NotFoundException si el usuario no existe
    */
   @ApiOperation({ summary: 'Eliminar un usuario por ID' })
-  @Auth()
+  @Auth(userRoles.Admin)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(id);

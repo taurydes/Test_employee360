@@ -4,34 +4,35 @@ module.exports = {
       validator: {
         $jsonSchema: {
           bsonType: 'object',
-          required: ['text', 'type', 'questionId', 'respondentId', 'score'],
+          required: ['questionId', 'respondentId', 'score'],
           properties: {
-            text: {
-              bsonType: 'string',
-              description: 'must be a string and is required'
-            },
-            type: {
-              enum: ['text', 'multiple_choice'],
-              description: 'can only be one of the enum values and is required'
+            _id: {
+              bsonType: 'objectId',
+              description: 'Debe ser un ObjectId y es requerido'
             },
             questionId: {
               bsonType: 'objectId',
-              description: 'must be an objectId and refer to a Question'
+              description: 'Debe ser un ObjectId y referirse a una Pregunta'
             },
             respondentId: {
               bsonType: 'objectId',
-              description: 'must be an objectId and refer to an Employee'
+              description: 'Debe ser un ObjectId y referirse a un Usuario'
             },
             score: {
               bsonType: 'int',
               minimum: 1,
               maximum: 5,
-              description: 'must be an integer between 1 and 5 representing the score'
+              description: 'Debe ser un número entero entre 1 y 5 representando la puntuación'
             }
           }
         }
       }
     });
+
+
+    await db.collection('answers').createIndex({ questionId: 1 });
+
+    await db.collection('answers').createIndex({ respondentId: 1 });
   },
 
   async down(db, client) {

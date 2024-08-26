@@ -1,13 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 
 export type EmployeeDocument = Employee & Document;
 
 @Schema()
 export class Employee {
-  @Prop({ default: uuidv4 })
-  _id: string;
+  @Prop({ type: Types.ObjectId, default: () => new Types.ObjectId() })
+  _id: Types.ObjectId; 
 
   @Prop({ required: true })
   name: string;
@@ -26,9 +26,9 @@ export class Employee {
 
   @Prop({ required: true })
   startDate: Date;
-
-  @Prop({ type: [{ type: String, ref: 'Evaluation' }] })
-  evaluations: string[];
+  
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Evaluation' }] })  
+  evaluations: Types.ObjectId[];
 }
 
 export const EmployeeSchema = SchemaFactory.createForClass(Employee);

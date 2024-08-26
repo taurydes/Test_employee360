@@ -4,6 +4,7 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { QuestionService } from './question.service';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 import { Auth } from 'src/auth/decorators/auth.decorator';
+import { userRoles } from 'src/common/constants';
 
 @ApiTags('Questions')
 @Controller('questions')
@@ -16,7 +17,7 @@ export class QuestionController {
    * @returns La pregunta creada
    * @throws NotFoundException si la evaluación no existe
    */
-  @Auth()
+  @Auth(userRoles.Manager)
   @Post()
   @ApiOperation({ summary: 'Crear nueva pregunta' })
   create(@Body() createQuestionDto: CreateQuestionBaseDto) {
@@ -27,7 +28,7 @@ export class QuestionController {
    * @summary Listar todas las preguntas
    * @returns Una lista de preguntas
    */
-  @Auth()
+  @Auth(userRoles.Manager)
   @Get()
   @ApiOperation({ summary: 'Listar todas las preguntas' })
   findAll() {
@@ -40,7 +41,7 @@ export class QuestionController {
    * @returns La pregunta encontrada con sus respuestas asociadas
    * @throws NotFoundException si la pregunta no existe
    */
-  @Auth()
+  @Auth(userRoles.Manager)
   @Get(':id')
   @ApiOperation({ summary: 'Obtener detalles de una pregunta' })
   findOne(@Param('id') id: string) {
@@ -54,7 +55,7 @@ export class QuestionController {
    * @returns La pregunta actualizada con sus respuestas asociadas
    * @throws NotFoundException si la pregunta no existe
    */
-  @Auth()
+  @Auth(userRoles.Manager)
   @Patch(':id')
   @ApiOperation({ summary: 'Actualizar una pregunta' })
   update(

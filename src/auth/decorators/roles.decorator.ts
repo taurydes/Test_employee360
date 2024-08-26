@@ -1,5 +1,7 @@
 // src/auth/decorators/roles.decorator.ts
 import { SetMetadata } from '@nestjs/common';
-import { RolesGuard } from '../guards/RolesGuard.guard';
+import { userRoles } from 'src/common/constants';
 
-export const Roles = (...roles: string[]) => SetMetadata('roles', roles);
+export const ROLES_KEY = 'roles';
+
+export const Roles = (...roles: userRoles[]) => SetMetadata(ROLES_KEY, roles);

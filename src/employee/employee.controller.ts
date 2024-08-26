@@ -12,6 +12,7 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { userRoles } from 'src/common/constants';
 
 @ApiTags('employee')
 @Controller('employee')
@@ -24,7 +25,7 @@ export class EmployeeController {
    * @returns El empleado creado
    */
   @ApiOperation({ summary: 'Crear un nuevo empleado' })
-  @Auth()
+  @Auth(userRoles.Manager)
   @Post()
   create(@Body() createEmployeeDto: CreateEmployeeDto) {
     return this.employeeService.create(createEmployeeDto);
@@ -35,7 +36,7 @@ export class EmployeeController {
    * @returns Una lista de empleados
    */
   @ApiOperation({ summary: 'Listar todos los empleados' })
-  @Auth()
+  @Auth(userRoles.Manager)
   @Get()
   findAll() {
     return this.employeeService.findAll();
@@ -48,7 +49,7 @@ export class EmployeeController {
    * @throws NotFoundException si el empleado no existe
    */
   @ApiOperation({ summary: 'Obtener un empleado por ID' })
-  @Auth()
+  @Auth(userRoles.Manager)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.employeeService.findOne(id);
@@ -62,7 +63,7 @@ export class EmployeeController {
    * @throws NotFoundException si el empleado no existe
    */
   @ApiOperation({ summary: 'Actualizar un empleado por ID' })
-  @Auth()
+  @Auth(userRoles.Manager)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -78,7 +79,7 @@ export class EmployeeController {
    * @throws NotFoundException si el empleado no existe
    */
   @ApiOperation({ summary: 'Eliminar un empleado por ID' })
-  @Auth()
+  @Auth(userRoles.Manager)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.employeeService.remove(id);

@@ -11,7 +11,7 @@ export class Answer {
   @Prop({ type: Types.ObjectId, ref: 'Question' })
   questionId: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'Employee' })
+  @Prop({ type: Types.ObjectId, ref: 'User' })
   respondentId: Types.ObjectId;
 
   @Prop({ required: true, min: 1, max: 5 })  

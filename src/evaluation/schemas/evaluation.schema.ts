@@ -1,25 +1,27 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { QuestionDocument } from './question.schema';
+import { EvaluationStatus } from '../evaluations.constants';
 
 export type EvaluationDocument = Evaluation & Document;
 
 @Schema()
 export class Evaluation {
-  @Prop({ type: Types.ObjectId, auto: true })
+  @Prop({ type: Types.ObjectId, default: () => new Types.ObjectId() })
   _id: Types.ObjectId;
 
   @Prop({ required: true })
   period: string;
 
-  @Prop({ required: true, enum: ['pending', 'in_progress', 'completed'] })
-  status: string;
+  @Prop({ required: true, enum: [EvaluationStatus.InProgress, EvaluationStatus.Completed] })
+  status: EvaluationStatus;
 
   @Prop({ required: true, enum: ['self', 'peer', 'manager'] })
   type: string;
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'Question' }] })
-  questions: (Types.ObjectId | QuestionDocument)[];
+  questions: Types.ObjectId[];
+  
 
   @Prop({ type: Types.ObjectId, ref: 'Employee' })
   employeeId: Types.ObjectId;

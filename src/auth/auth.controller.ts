@@ -3,6 +3,9 @@ import { AuthService } from './auth.service';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { LoginUserDto } from './dto/login-user.dto';
 import { Roles } from './decorators/roles.decorator';
+import { userRoles } from 'src/common/constants';
+import { Auth } from './decorators/auth.decorator';
+import { CreateUserDto } from 'src/user/dto/create-user.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -22,12 +25,13 @@ export class AuthController {
   }
 
   /**
-   * @summary Cerrar sesión de un usuario
-   * @returns Mensaje de confirmación de cierre de sesión
+   * @summary Crear un nuevo usuario
+   * @param createUserDto - Datos del usuario a crear
+   * @returns El usuario creado
    */
-  @ApiOperation({ summary: 'Cerrar sesión de un usuario' })
-  @Post('logout')
-  async logout() {
-    return this.authService.logout();
+  @ApiOperation({ summary: 'Registrar un nuevo usuario' })
+  @Post('Register')
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.authService.createUser(createUserDto);
   }
 }

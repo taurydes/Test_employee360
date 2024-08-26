@@ -1,43 +1,47 @@
 module.exports = {
   async up(db, client) {
-    // Crear la colección "employees" con el esquema definido
+
     await db.createCollection('employees', {
       validator: {
         $jsonSchema: {
           bsonType: 'object',
           required: ['name', 'email', 'role', 'position', 'department', 'startDate'],
           properties: {
+            _id: {
+              bsonType: 'objectId',
+              description: 'Debe ser un ObjectId y es requerido'
+            },
             name: {
               bsonType: 'string',
-              description: 'must be a string and is required'
+              description: 'Debe ser una cadena de texto y es requerido'
             },
             email: {
               bsonType: 'string',
-              description: 'must be a string and is required'
+              description: 'Debe ser una cadena de texto y es requerido'
             },
             role: {
               enum: ['admin', 'manager', 'employee'],
-              description: 'can only be one of the enum values and is required'
+              description: 'Solo puede ser uno de los valores predefinidos y es requerido'
             },
             position: {
               bsonType: 'string',
-              description: 'must be a string and is required'
+              description: 'Debe ser una cadena de texto y es requerido'
             },
             department: {
               bsonType: 'string',
-              description: 'must be a string and is required'
+              description: 'Debe ser una cadena de texto y es requerido'
             },
             startDate: {
               bsonType: 'date',
-              description: 'must be a date and is required'
+              description: 'Debe ser una fecha y es requerido'
             },
             evaluations: {
               bsonType: ['array'],
               items: {
                 bsonType: 'objectId',
-                description: 'must be an objectId'
+                description: 'Debe ser un ObjectId y referirse a una Evaluación'
               },
-              description: 'Array of evaluation IDs'
+              description: 'Array de IDs de evaluaciones'
             }
           }
         }
@@ -49,7 +53,7 @@ module.exports = {
   },
 
   async down(db, client) {
-    // Eliminar la colección "employees" en caso de rollback
+
     await db.collection('employees').drop();
   }
 };

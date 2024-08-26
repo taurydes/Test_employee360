@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsArray, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsArray, IsOptional, IsMongoId } from 'class-validator';
 import { Types } from 'mongoose';
 import { CreateAnswerDto } from './create-answer.dto';
 
@@ -14,6 +14,7 @@ export class CreateQuestionBaseDto extends CreateQuestionDto {
   @ApiProperty({ description: 'Text of the question' })
   @IsNotEmpty()
   @IsString()
+  @IsMongoId()
   evaluationId: string;
 }
 

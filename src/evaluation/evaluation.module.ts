@@ -7,6 +7,9 @@ import { Question, QuestionSchema } from './schemas/question.schema';
 import { Answer, AnswerSchema } from './schemas/answer.schema';
 import { QuestionController } from './question.controller';
 import { QuestionService } from './question.service';
+import { Employee, EmployeeSchema } from 'src/employee/schemas/employee.schema';
+import { User, UserSchema } from 'src/user/schemas/user.schema';
+import { MailModule } from 'src/mail/mail.module';
 
 @Module({
   imports: [
@@ -14,7 +17,10 @@ import { QuestionService } from './question.service';
       { name: Evaluation.name, schema: EvaluationSchema },
       { name: Question.name, schema: QuestionSchema },
       { name: Answer.name, schema: AnswerSchema },
+      { name: Employee.name, schema: EmployeeSchema },
+      { name: User.name, schema: UserSchema },
     ]),
+    MailModule
   ],
   controllers: [EvaluationController,QuestionController],
   providers: [EvaluationService,QuestionService],

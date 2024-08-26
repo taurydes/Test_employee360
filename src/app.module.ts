@@ -7,6 +7,8 @@ import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { EmployeeModule } from './employee/employee.module';
 import { EvaluationModule } from './evaluation/evaluation.module';
+import { ThrottlerModule } from '@nestjs/throttler';
+import { MailModule } from './mail/mail.module';
 
 
 export function configApp(app: INestApplication) {
@@ -24,11 +26,16 @@ export function configApp(app: INestApplication) {
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    ThrottlerModule.forRoot([{
+      ttl: 60000,
+      limit: 10,
+    }]),
     MongooseModule.forRoot('mongodb://localhost/nest'),
     AuthModule,
     UserModule,
     EmployeeModule,
     EvaluationModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

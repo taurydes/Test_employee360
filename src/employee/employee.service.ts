@@ -4,7 +4,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Employee, EmployeeDocument } from './schemas/employee.schema';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
@@ -51,18 +51,21 @@ export class EmployeeService {
    * @throws NotFoundException si el empleado no existe
    */
   async findOne(id: string): Promise<Employee> {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException('Invalid ID format');
+    }
     const employee = await this.employeeModel
-      .findById(id)
-      .populate({
-        path: 'evaluations',
+    .findById(new Types.ObjectId(id))
+    .populate({
+      path: 'evaluations',
+      populate: {
+        path: 'questions',
         populate: {
-          path: 'questions',
-          populate: {
-            path: 'answers',
-          },
+          path: 'answers',
         },
-      })
-      .exec();
+      },
+    })
+    .exec();
     if (!employee) {
       throw new NotFoundException(`Employee with ID ${id} not found`);
     }
@@ -81,8 +84,11 @@ export class EmployeeService {
     id: string,
     updateEmployeeDto: UpdateEmployeeDto,
   ): Promise<Employee> {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException('Invalid ID format');
+    }
     const updatedEmployee = await this.employeeModel
-      .findByIdAndUpdate(id, updateEmployeeDto, { new: true })
+      .findByIdAndUpdate(new Types.ObjectId(id), updateEmployeeDto, { new: true })
       .exec();
     if (!updatedEmployee) {
       throw new NotFoundException(`Employee with ID ${id} not found`);
@@ -97,7 +103,10 @@ export class EmployeeService {
    * @throws NotFoundException si el empleado no existe
    */
   async remove(id: string): Promise<void> {
-    const result = await this.employeeModel.findByIdAndDelete(id).exec();
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException('Invalid ID format');
+    }
+    const result = await this.employeeModel.findByIdAndDelete(new Types.ObjectId(id)).exec();
     if (!result) {
       throw new NotFoundException(`Employee with ID ${id} not found`);
     }

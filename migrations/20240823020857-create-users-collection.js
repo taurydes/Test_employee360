@@ -8,43 +8,43 @@ module.exports = {
           properties: {
             _id: {
               bsonType: 'objectId',
-              description: 'must be an ObjectId and is required'
+              description: 'Debe ser un ObjectId y es requerido'
             },
             username: {
               bsonType: 'string',
-              description: 'must be a string and is required'
+              description: 'Debe ser una cadena de texto y es requerido'
             },
             email: {
               bsonType: 'string',
-              description: 'must be a string and is required'
+              description: 'Debe ser una cadena de texto y es requerido'
             },
             password: {
               bsonType: 'string',
-              description: 'must be a string and is required'
+              description: 'Debe ser una cadena de texto y es requerido'
             },
             role: {
               enum: ['admin', 'manager', 'employee'],
-              description: 'must be one of the predefined roles and is required'
+              description: 'Debe ser uno de los roles predefinidos y es requerido'
             },
             createdAt: {
               bsonType: 'date',
-              description: 'must be a date and is required'
+              description: 'Debe ser una fecha y es requerido'
             },
             updatedAt: {
               bsonType: 'date',
-              description: 'must be a date and is required'
+              description: 'Debe ser una fecha y es requerido'
             }
           }
         }
       }
     });
 
-    // Crear índice único en el campo "email"
+
     await db.collection('users').createIndex({ email: 1 }, { unique: true });
   },
 
   async down(db, client) {
-    // Eliminar la colección "users" en caso de rollback
+
     await db.collection('users').drop();
   }
 };
