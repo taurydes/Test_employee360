@@ -26,22 +26,18 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
-
-```bash
-$ npm install
-```
-
-## Bases de datos
-
-Las bases de datos se pueden inicializar usando docker.
-
 1. Clona el repositorio:
 
 ```bash
 
 git clone https://github.com/tu_usuario/proyecto-evaluacion.git
 cd proyecto-evaluacion
+```
+
+## Installation
+
+```bash
+$ npm install
 ```
 
 2. Copia el contenido de `.env.example` y crea un `.env`:
@@ -63,6 +59,9 @@ MAIL_FROM=tucorreo@gmail.com
 MAIL_PORT=587
 
 ```
+## Bases de datos
+
+Las bases de datos se pueden inicializar usando docker.
 
 4. Ejecuta el siguiente comando para levantar las bases de datos con Docker Compose:
 
